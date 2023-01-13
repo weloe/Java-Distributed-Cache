@@ -67,4 +67,9 @@ public class LRUKCache<K, V> extends LRUCache<K, V> {
         historyList.setCallback((Callback<Object, Integer>) callback);
     }
 
+    @Override
+    public void clear() {
+        super.clear();
+        historyList.clear();
+    }
 }

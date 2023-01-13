@@ -23,4 +23,6 @@ public interface CacheStrategy<K, V> {
     V outCache();
 
     V outCache(K k);
+
+    void clear();
 }

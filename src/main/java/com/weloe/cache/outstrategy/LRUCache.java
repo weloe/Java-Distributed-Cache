@@ -70,6 +70,11 @@ public class LRUCache<K, V> implements CacheStrategy<K, V> {
     }
 
     @Override
+    public void clear() {
+        map.clear();
+    }
+
+    @Override
     public void setCallback(Callback<K, V> callback) {
         this.callback = callback;
     }
