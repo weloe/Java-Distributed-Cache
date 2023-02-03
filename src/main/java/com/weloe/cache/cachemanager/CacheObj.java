@@ -7,8 +7,6 @@ import java.time.LocalDateTime;
  */
 public class CacheObj {
 
-    private LocalDateTime endTime;
-
     private Class clazz;
 
     private int byteSize;
@@ -19,8 +17,12 @@ public class CacheObj {
     public CacheObj() {
     }
 
+    public CacheObj(byte[] data){
+        this.data = data;
+        this.byteSize = data.length;
+    }
+
     public CacheObj(LocalDateTime endTime,Class clazz ,int byteSize, byte[] data) {
-        this.endTime = endTime;
         this.clazz = clazz;
         this.byteSize = byteSize;
         this.data = data;
@@ -32,15 +34,6 @@ public class CacheObj {
 
     public byte[] getData() {
         return data;
-    }
-
-
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-
-    public LocalDateTime getEndTime() {
-        return endTime;
     }
 
     public void setClazz(Class clazz) {

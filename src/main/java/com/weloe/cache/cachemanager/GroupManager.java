@@ -1,12 +1,24 @@
 package com.weloe.cache.cachemanager;
 
+import com.weloe.cache.server.parser.CommandParser;
+
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author weloe
  */
 public class GroupManager {
+
+    private static GroupManager instance = new GroupManager(new HashMap<>(),new ReentrantLock());
+
+    private GroupManager (){}
+
+    public static GroupManager getInstance() {
+        return instance;
+    }
 
     private Map<String, Group> groupMap;
 
@@ -31,5 +43,7 @@ public class GroupManager {
         return groupMap.put(group.getName(),group);
     }
 
-
+    public CacheObj get(String group,String key){
+        return getGroup(group).get(key);
+    }
 }

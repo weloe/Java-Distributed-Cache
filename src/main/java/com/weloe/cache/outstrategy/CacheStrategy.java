@@ -20,9 +20,29 @@ public interface CacheStrategy<K, V> {
 
     List list();
 
-    V outCache();
+    OutEntry<K,V> outCache();
 
     V outCache(K k);
 
     void clear();
+
+    class OutEntry<K,V>{
+        K k;
+        V v;
+
+        public OutEntry(K k, V v) {
+            this.k = k;
+            this.v = v;
+        }
+
+        public K getK() {
+            return k;
+        }
+
+        public V getV() {
+            return v;
+        }
+    }
+
+
 }

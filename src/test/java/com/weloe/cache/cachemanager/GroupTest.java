@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 
@@ -48,9 +49,8 @@ class GroupTest {
     void expire() {
         String x = "132";
         group.putCacheObj("cache1",new CacheObj(null,String.class,x.getBytes(StandardCharsets.UTF_8).length,x.getBytes(StandardCharsets.UTF_8)));
-        CacheObj cache1 = group.expire("cache1", 2, ChronoUnit.MINUTES);
-        System.out.println(cache1.getEndTime());
-        System.out.println(group.get("cache1").getEndTime());
-        Assertions.assertSame(cache1.getEndTime(),group.get("cache1").getEndTime());
+        group.expire("cache1", 2, ChronoUnit.MINUTES);
+
+        System.out.println(group.ttl("cache1"));
     }
 }

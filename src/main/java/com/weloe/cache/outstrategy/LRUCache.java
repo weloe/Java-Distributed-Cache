@@ -52,7 +52,7 @@ public class LRUCache<K, V> implements CacheStrategy<K, V> {
     }
 
     @Override
-    public V outCache() {
+    public OutEntry<K,V> outCache() {
         // 移除
         K last = queue.removeLast();
         V removeValue = map.remove(last);
@@ -61,7 +61,7 @@ public class LRUCache<K, V> implements CacheStrategy<K, V> {
         if (callback != null) {
             callback.callback(last, removeValue);
         }
-        return removeValue;
+        return new OutEntry<>(last,removeValue);
     }
 
     @Override

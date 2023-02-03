@@ -2,6 +2,7 @@ package com.weloe.cache.cachemanager;
 
 import com.weloe.cache.util.BytesUtil;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
@@ -19,8 +20,12 @@ public class Group {
 
     private Getter getter;
 
+    public Group() {
+
+    }
+
     @FunctionalInterface
-    interface Getter {
+    public interface Getter {
         byte[] get(String k) throws Exception;
     }
 
@@ -79,15 +84,20 @@ public class Group {
         return obj;
     }
 
-    public CacheObj expire(String key, long num, ChronoUnit timeUnit){
+    public LocalDateTime expire(String key, long num, ChronoUnit timeUnit){
         CacheObj cacheObj;
-        try {
-            cacheObj = cache.get(key);
-            cacheObj.setEndTime(LocalDateTime.now().plus(num, timeUnit));
-        } catch (Exception e) {
+        cacheObj = cache.get(key);
+        if(cacheObj == null){
             return null;
         }
-        return cacheObj;
+        LocalDateTime time = cache.setTTL(key, LocalDateTime.now().plus(num, timeUnit));
+
+        return time;
+    }
+
+    public long ttl(String key){
+        Duration duration = Duration.between(LocalDateTime.now(), cache.ttl(key));
+        return duration.toMillis()/1000;
     }
 
     public boolean setMaxSize(int num){
@@ -113,6 +123,18 @@ public class Group {
 
     public void clear(){
         cache.clear();
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCache(Cache cache) {
+        this.cache = cache;
+    }
+
+    public void setGetter(Getter getter) {
+        this.getter = getter;
     }
 }
 
