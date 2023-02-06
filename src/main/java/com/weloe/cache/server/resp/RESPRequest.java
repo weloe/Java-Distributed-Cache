@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.net.Socket;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author weloe
@@ -12,8 +13,14 @@ import java.util.List;
 public class RESPRequest {
     private InputStream inputStream;
 
+    private Map<String,String> params;
+
     public RESPRequest(Socket socket) throws IOException {
         this.inputStream = socket.getInputStream();
+    }
+
+    public String getParam(String key) {
+        return params.get(key);
     }
 
     /**

@@ -1,8 +1,12 @@
 package com.weloe.cache.server.resp;
 
+import com.weloe.cache.cachemanager.Group;
+import com.weloe.cache.server.parser.Router;
+
 import java.io.*;
 import java.net.Socket;
 import java.time.LocalDateTime;
+import java.util.Map;
 
 /**
  * @author weloe
@@ -17,11 +21,16 @@ public class RESPContext {
 
     private RESPResponse response;
 
+    private Router.Route route;
+
+    private Map<String,String> paramMap;
+
+    private Group group;
+
 
     public void initServer(Socket socket, RESPRequest request, RESPResponse response) throws IOException {
 
         this.socket = socket;
-
         this.request = request;
         this.response = response;
         this.startTime = LocalDateTime.now();
@@ -52,10 +61,6 @@ public class RESPContext {
 
     public void ok() {
         response.ok();
-    }
-
-    public void ok(Integer arg) {
-        response.ok(arg);
     }
 
     public void ok(byte[] bytes){
@@ -115,5 +120,33 @@ public class RESPContext {
 
     public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
+    }
+
+    public void setParamMap(Map<String, String> paramMap) {
+        this.paramMap = paramMap;
+    }
+
+    public Map<String, String> getParamMap() {
+        return paramMap;
+    }
+
+    public void setRoute(Router.Route route) {
+        this.route = route;
+    }
+
+    public Router.Route getRoute() {
+        return route;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public String getParam(String key){
+        return paramMap.get(key);
     }
 }
